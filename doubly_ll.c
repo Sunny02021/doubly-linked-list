@@ -108,6 +108,20 @@ void insert_at_index(Node** head, HpString* data, int index) {
     temp->next = new_node;
 }
 
+void delete_first(Node** head) {
+    if (head == NULL) return;
+    if ((*head)->next == NULL) {
+        *head = NULL;
+        free(head);
+    }
+
+    Node* old_head = *head;
+
+    *head = (*head)->next;
+    (*head)->prev = NULL;
+    free(old_head);
+}
+
 void free_list(Node* head) {
     Node* temp = NULL;
 
@@ -178,6 +192,11 @@ int main() {
     insert_at_index(&head, my_string5, 0);
 
     //print(head);
+    print_full(head);
+
+    printf("\nAfter Delete First:\n\n");
+    delete_first(&head);
+
     print_full(head);
 
     free_list(head);
