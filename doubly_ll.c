@@ -141,6 +141,27 @@ void delete_last(Node** head) {
     free(temp);
 }
 
+void delete_at_index(Node** head, int index) {
+    if (*head == NULL) return;
+
+    if (index == 0) {
+        delete_first(head);
+        return;
+    }
+
+    Node* temp = *head;
+    for (int i = 0; i < index && temp != NULL; i++) {
+        temp = temp->next;
+    }
+
+    if (temp == NULL) return;
+
+    if (temp->next != NULL) temp->next->prev = temp->prev;
+    if (temp->prev != NULL) temp->prev->next = temp->next;
+
+    free(temp);
+}
+
 void free_list(Node* head) {
     Node* temp = NULL;
 
@@ -220,6 +241,11 @@ int main() {
 
     printf("\nAfter Delete Last:\n\n");
     delete_last(&head);
+
+    print_full(head);
+
+    printf("\nAfter Delete At Index 1:\n\n");
+    delete_at_index(&head, 1);
 
     print_full(head);
 
