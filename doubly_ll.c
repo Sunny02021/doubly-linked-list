@@ -10,6 +10,7 @@ status: unfinished
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 typedef struct {
@@ -162,6 +163,22 @@ void delete_at_index(Node** head, int index) {
     free(temp);
 }
 
+// Returns the index if found, returns -1 if not found.
+int find_string(Node* head, HpString* str) {
+    Node* temp = head;
+    int index = 0;
+
+    while (temp != NULL) {
+        if (strcmp(temp->str->data, str->data) == 0) {
+            return index;
+        }
+        temp = temp->next;
+        index++;
+    }
+
+    return -1;
+}
+
 void free_list(Node* head) {
     Node* temp = NULL;
 
@@ -210,6 +227,7 @@ int main() {
     HpString *my_string3 = create_string("C");
     HpString *my_string4 = create_string("D");
     HpString *my_string5 = create_string("E");
+    HpString *my_string6 = create_string("F");
 
     if (my_string1 == NULL || my_string2 == NULL) {
         free_string(my_string1);
@@ -248,6 +266,30 @@ int main() {
     delete_at_index(&head, 1);
 
     print_full(head);
+
+    printf("\n'H' is on the list?");
+    int res = find_string(head, my_string6);
+    if (res == -1) {
+        printf("\nNo. Result: %d\n", res);
+    } else {
+        printf("\nYes. At index %d\n", res);
+    }
+
+    printf("\n'A' is on the list?");
+    res = find_string(head, my_string1);
+    if (res == -1) {
+        printf("\nNo. Result: %d\n", res);
+    } else {
+        printf("\nYes. At index %d\n", res);
+    }
+
+    printf("\n'D' is on the list?");
+    res = find_string(head, my_string4);
+    if (res == -1) {
+        printf("\nNo. Result: %d\n", res);
+    } else {
+        printf("\nYes. At index %d\n", res);
+    }
 
     free_list(head);
     free_string(my_string1);
